@@ -1112,6 +1112,8 @@ type (
 	StackOption struct {
 		// Prune services that are no longer referenced
 		Prune bool `example:"false"`
+		// Enable atomic rollback on failure (Helm --atomic flag for Kubernetes Helm stacks)
+		HelmAtomic bool `example:"false"`
 	}
 
 	// StackID represents a stack identifier (it must be composed of Name + "_" + SwarmID to create a unique identifier)
