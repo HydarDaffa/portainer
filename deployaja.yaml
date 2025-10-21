@@ -1,4 +1,4 @@
-name: portainer-app
+name: portainer-apps
 version: 1.0.0
 description: My awesome application
 container:
