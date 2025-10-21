@@ -1,4 +1,4 @@
-name: my-app
+name: portainer-app
 version: 1.0.0
 description: My awesome application
 container:
@@ -13,7 +13,7 @@ env:
     value: production
 
    
-domain: my-app.deployaja.id
+domain: portainer.deployaja.id
 envMap:
   db_host: MYSQL_HOST
   db_name: MYSQL_DATABASE
