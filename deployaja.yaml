@@ -2,18 +2,10 @@ name: portainer-apps
 version: 1.0.0
 description: My awesome application
 container:
-  image: my-app:latest
-  port: 3000
+  image: portainer/portainer-ce:latest
+  port: 9000
 resources:
   cpu: 500m
   memory: 512Mi
   replicas: 1
-
-   
 domain: portainer.deployaja.id
-envMap:
-  db_host: MYSQL_HOST
-  db_name: MYSQL_DATABASE
-  db_user: MYSQL_USER
-  db_password: MYSQL_PASSWORD
-  db_pass: MYSQL_PASSWORD
