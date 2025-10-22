@@ -3,7 +3,7 @@ version: 1.0.0
 description: Portainer CE Deployment
 container:
   image: portainer/portainer-ce:latest
-  port: 9000   # bisa juga 9443
+  port: 9000   
 resources:
   cpu: 500m
   memory: 512Mi
