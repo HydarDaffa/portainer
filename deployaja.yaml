@@ -1,63 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: portainer-apps
-  labels:
-    app: portainer
-spec:
+name: portainer-apps
+version: 1.0.0
+description: Portainer CE Deployment
+container:
+  image: portainer/portainer-ce:latest
+  port: 9000   # bisa juga 9443
+resources:
+  cpu: 500m
+  memory: 512Mi
   replicas: 1
-  selector:
-    matchLabels:
-      app: portainer
-  template:
-    metadata:
-      labels:
-        app: portainer
-    spec:
-      containers:
-      - name: portainer
-        image: portainer/portainer-ce:latest
-        ports:
-        - containerPort: 9000
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
-        volumeMounts:
-        - name: data
-          mountPath: /data
-        - name: docker-sock
-          mountPath: /var/run/docker.sock
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: portainer-data
-      - name: docker-sock
-        hostPath:
-          path: /var/run/docker.sock
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: portainer-service
-spec:
-  selector:
-    app: portainer
-  ports:
-  - port: 80
-    targetPort: 9000
-  type: LoadBalancer
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: portainer-data
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+volumes:
+  - name: portainer-data
+    persistent: true
+domain: portainer.deployaja.id
+envMap: {}
