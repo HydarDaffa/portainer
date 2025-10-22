@@ -1,80 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: portainer-apps
-  labels:
-    app: portainer
-spec:
+name: portainer-apps
+version: 1.0.0
+description: Portainer CE Deployment
+container:
+  image: portainer/portainer-ce:latest
+  port: 9000   
+resources:
+  cpu: 500m
+  memory: 512Mi
   replicas: 1
-  selector:
-    matchLabels:
-      app: portainer
-  template:
-    metadata:
-      labels:
-        app: portainer
-    spec:
-      containers:
-      - name: portainer
-        image: portainer/portainer-ce:latest
-        ports:
-        - containerPort: 9000
-        env:
-        - name: PORTAINER_URL
-          value: "https://portainer.deployaja.id"
-        resources:
-          requests:
-            cpu: "500m"
-            memory: "512Mi"
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
-        volumeMounts:
-        - name: portainer-data
-          mountPath: /data
-      volumes:
-      - name: portainer-data
-        persistentVolumeClaim:
-          claimName: portainer-data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: portainer-service
-spec:
-  selector:
-    app: portainer
-  ports:
-  - port: 80
-    targetPort: 9000
-  type: ClusterIP
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: portainer-data
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: portainer-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-  - host: portainer.deployaja.id
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: portainer-service
-            port:
-              number: 80
+volumes:
+  - name: portainer-data
+    persistent: true
+domain: portainer.deployaja.id
+envMap: {}
